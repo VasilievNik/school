@@ -5,59 +5,45 @@ import ru.hogwarts.school.Exceptions.FacultyAlreadyExistException;
 import ru.hogwarts.school.Exceptions.FacultyNotExistException;
 import ru.hogwarts.school.Exceptions.StudentAlreadyExistException;
 import ru.hogwarts.school.Exceptions.StudentNotExistException;
+import ru.hogwarts.school.repository.FacultyRepository;
+import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class service {
 
-    private Long studentCounter;
-    private Long facultyCounter;
-
     @Service
     public class StudentService{
 
-        private final Map<Long, model.Student> studentMap = new HashMap<>();
-
-        public model.Student add(model.Student student){
-            if (studentMap.containsValue(student)){
-                throw new StudentAlreadyExistException();
-            }
-            studentMap.put(studentCounter, student);
-            studentCounter++;
-            return student;
+        private final StudentRepository studentRepository;
+        public StudentService(StudentRepository studentrepository) {
+            this.studentRepository = studentrepository;
         }
 
-        public model.Student find(model.Student student){
-            if (studentMap.containsValue(student)){
-                return student;
+        public model.Student createStudent(model.Student student) {
+            if (studentRepository.existsById(student.getId())){
+                return (model.Student) studentRepository.save(student);
             }
-            return null;
+            throw new StudentAlreadyExistException();
         }
 
-        public model.Student update(model.Student student, model.Student studentNew){
-            if (studentMap.containsValue(student)){
-                Long keyNeeded = null;
-                for (Map.Entry<Long, model.Student> entry : studentMap.entrySet()) {
-                    if (entry.getValue().equals(student)) {
-                        keyNeeded = entry.getKey();
-                    }
-                }
-                studentMap.replace(keyNeeded, student, studentNew);
+        public model.Student findStudent(Long id) {
+            if (studentRepository.existsById(id)){
+                return (model.Student) studentRepository.findById(id).get();
             }
-            return studentNew;
+            throw new StudentNotExistException();
         }
 
-        public model.Student delete(model.Student student){
-            if (studentMap.containsValue(student)){
-                studentMap.remove(student);
-                return student;
+        public void deleteStudent(Long id) {
+            if (studentRepository.existsById(id)){
+                studentRepository.deleteById(id);
             }
             throw new StudentNotExistException();
         }
 
         public List<model.Student> findAge(int age){
-            List<model.Student> studentList = (List<model.Student>) studentMap.values();
+            List<model.Student> studentList = (List<model.Student>) studentRepository.findAll();
             return studentList.stream().filter(student -> student.getAge() == age).collect(Collectors.toList());
         }
     }
@@ -65,47 +51,34 @@ public class service {
     @Service
     public class FacultyService{
 
-       private final Map<Long, model.Faculty> facultyMap = new HashMap<>();
-
-        public model.Faculty add(model.Faculty faculty){
-            if (facultyMap.containsValue(faculty)){
-                throw new FacultyAlreadyExistException();
-            }
-            facultyMap.put(facultyCounter, faculty);
-            facultyCounter++;
-            return faculty;
+        private final FacultyRepository facultyRepository;
+        public FacultyService(FacultyRepository facultyrepository) {
+            this.facultyRepository = facultyrepository;
         }
 
-        public model.Faculty find(model.Faculty faculty){
-            if (facultyMap.containsValue(faculty)){
-                return faculty;
+        public model.Faculty createFaculty(model.Faculty faculty) {
+            if (facultyRepository.existsById(faculty.getId())){
+                return (model.Faculty) facultyRepository.save(faculty);
             }
-            return null;
+            throw new FacultyAlreadyExistException();
         }
 
-        public model.Faculty update(model.Faculty faculty, model.Faculty facultyNew){
-            if (facultyMap.containsValue(faculty)){
-                Long keyNeeded = null;
-                for (Map.Entry<Long, model.Faculty> entry : facultyMap.entrySet()) {
-                    if (entry.getValue().equals(faculty)) {
-                        keyNeeded = entry.getKey();
-                    }
-                }
-                facultyMap.replace(keyNeeded, faculty, facultyNew);
+        public model.Faculty findFaculty(Long id) {
+            if (facultyRepository.existsById(id)){
+                return (model.Faculty) facultyRepository.findById(id).get();
             }
-            return facultyNew;
+            throw new FacultyNotExistException();
         }
 
-        public model.Faculty delete(model.Faculty faculty){
-            if (facultyMap.containsValue(faculty)){
-                facultyMap.remove(faculty);
-                return faculty;
+        public void deleteFaculty(Long id) {
+            if (facultyRepository.existsById(id)){
+                facultyRepository.deleteById(id);
             }
             throw new FacultyNotExistException();
         }
 
         public List<model.Faculty> findColor(String color){
-            List<model.Faculty> facultyList = (List<model.Faculty>) facultyMap.values();
+            List<model.Faculty> facultyList = (List<model.Faculty>) facultyRepository.findAll();
             return facultyList.stream().filter(faculty -> faculty.getColor() == color).collect(Collectors.toList());
         }
 
