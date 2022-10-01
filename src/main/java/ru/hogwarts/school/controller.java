@@ -1,37 +1,43 @@
 package ru.hogwarts.school;
 
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 
-@RestController
-class controller {
+import javax.persistence.PostUpdate;
+import java.util.List;
 
     @RequestMapping("students")
     class StudentController {
 
-        private final service.StudentService studentService;
+        private final StudentService studentService;
 
-        public StudentController(service.StudentService studentService) {
+        public StudentController(StudentService studentService) {
             this.studentService = studentService;
         }
 
         @PostMapping
-        public model.Student addStudent(@RequestBody model.Student student){
+        public Student addStudent(@RequestBody Student student){
             return studentService.createStudent(student);
         }
 
-        @GetMapping
-        public model.Student findStudent(@RequestBody Long id){
+        @PostUpdate
+        public Student updateStudent(@RequestBody Student student, @RequestBody Student studentNew){
+            return studentService.updateStudent(student, studentNew);
+        }
+
+        @GetMapping("{id}")
+        public Student findStudent(@PathVariable Long id){
             return studentService.findStudent(id);
         }
 
-        @DeleteMapping
-        public void deleteStudent(@RequestBody Long id){
+        @GetMapping("{id}")
+        public void deleteStudent(@PathVariable Long id){
             studentService.deleteStudent(id);
         }
 
-        @GetMapping("{age}")
-        public List<model.Student> ageSearch(@PathVariable int age){
+        @GetMapping
+        public List<Student> ageSearch(@RequestBody int age){
             return studentService.findAge(age);
         }
     }
@@ -39,32 +45,36 @@ class controller {
     @RequestMapping("faculties")
     class FacultyController {
 
-        private final service.FacultyService facultyService;
+        private final FacultyService facultyService;
 
-        public FacultyController(service.FacultyService facultyService) {
+        public FacultyController(FacultyService facultyService) {
             this.facultyService = facultyService;
         }
 
         @PostMapping
-        public model.Faculty addFaculty(@RequestBody model.Faculty faculty){
+        public Faculty addFaculty(@RequestBody Faculty faculty){
             return facultyService.createFaculty(faculty);
         }
 
-        @GetMapping
-        public model.Faculty findFaculty(@RequestBody Long id){
+        @PostUpdate
+        public Faculty updateFaculty(@RequestBody Faculty faculty, @RequestBody Faculty facultyNew){
+            return facultyService.updateFaculty(faculty, facultyNew);
+        }
+
+        @GetMapping("{id}")
+        public Faculty findFaculty(@PathVariable Long id){
             return facultyService.findFaculty(id);
         }
 
-        @DeleteMapping
-        public void deleteFaculty(@RequestBody Long id){
+        @GetMapping("{id}")
+        public void deleteFaculty(@PathVariable Long id){
             facultyService.deleteFaculty(id);
         }
 
-        @GetMapping("{color}")
-        public List<model.Faculty> colorSearch(@PathVariable String color){
+        @GetMapping
+        public List<Faculty> colorSearch(@RequestBody String color){
             return facultyService.findColor(color);
         }
 
     }
-}
 
