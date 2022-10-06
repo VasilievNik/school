@@ -47,13 +47,8 @@ public class Faculty {
         return "Имя: " + this.name + " ID: " + this.id + " Цвет: " + this.color;
     }
 
-    public boolean equals(Object other) {
-        if (this.getClass() != other.getClass()) {
-            return false;
-        }
-        Faculty faculty1 = (Faculty) other;
-
-        return name.equals(faculty1.name);
+    public boolean equals(Object anObject) {
+        return this == anObject;
     }
 
     public int hashCode() {

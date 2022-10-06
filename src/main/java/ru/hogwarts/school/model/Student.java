@@ -42,13 +42,8 @@ public class Student {
         return "Имя: "+this.name+" ID: "+this.id+" Возраст: "+this.age;
     }
 
-    public boolean equals(Object other) {
-        if (this.getClass() != other.getClass()) {
-            return false;
-        }
-        Student student1 = (Student) other;
-
-        return name.equals(student1.name);
+    public boolean equals(Object anObject) {
+        return this == anObject;
     }
 
     public int hashCode() {
