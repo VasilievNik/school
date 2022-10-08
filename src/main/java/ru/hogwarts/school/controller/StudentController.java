@@ -22,12 +22,14 @@ class StudentController {
         return studentService.createStudent(student);
     }
 
-    @PostUpdate
+    @PutMapping
+    //@PostUpdate
     public Student updateStudent(@RequestBody Student studentNew){
         return studentService.updateStudent(studentNew);
     }
 
-    @PutMapping("{id}")
+    @GetMapping("{id}")
+   // @PutMapping("{id}")
     public Student findStudent(@PathVariable Long id){
         return studentService.findStudent(id);
     }
