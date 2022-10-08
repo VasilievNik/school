@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.model.Faculty;
 
-import javax.persistence.PostUpdate;
 import java.util.List;
 
 @RestController
@@ -22,12 +21,14 @@ class FacultyController {
         return facultyService.createFaculty(faculty);
     }
 
-    @PostUpdate
+   // @PostUpdate
+    @PutMapping
     public Faculty updateFaculty(@RequestBody Faculty facultyNew){
         return facultyService.updateFaculty(facultyNew);
     }
 
-    @PutMapping("{id}")
+    @GetMapping("{id}")
+    //@PutMapping("{id}")
     public Faculty findFaculty(@PathVariable Long id){
         return facultyService.findFaculty(id);
     }
