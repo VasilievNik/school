@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.Exceptions.FacultyNotExistException;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -48,5 +50,13 @@ public class FacultyService{
 
     public List<Faculty> findColor(String color){
         return facultyRepository.findAllByColor(color);
+    }
+
+    public Collection<Student> getStudents(Long id){
+        return facultyRepository.findById(id).get().getStudents();
+    }
+
+    public Faculty findByNameIgnoreCase(String nameOrColor){
+        return facultyRepository.findByNameIgnoreCase(nameOrColor);
     }
 }
