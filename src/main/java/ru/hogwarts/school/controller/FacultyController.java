@@ -22,14 +22,12 @@ class FacultyController {
         return facultyService.createFaculty(faculty);
     }
 
-   // @PostUpdate
     @PutMapping
     public Faculty updateFaculty(@RequestBody Faculty facultyNew){
         return facultyService.updateFaculty(facultyNew);
     }
 
     @GetMapping("{id}")
-    //@PutMapping("{id}")
     public Faculty findFaculty(@PathVariable Long id){
         return facultyService.findFaculty(id);
     }
