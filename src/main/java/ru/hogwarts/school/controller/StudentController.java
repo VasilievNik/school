@@ -22,29 +22,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("students")
+public
 class StudentController {
 
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
-    }
-
-    @GetMapping("{id}")
-    public ResponseEntity<Object> getStudentInfo(@PathVariable Long id) {
-        Student student = studentService.findStudent(id);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(student);
-    }
-
-    @GetMapping("getAllStudents")
-    public ResponseEntity<List<Student>> findStudents(@RequestParam(required = false) int age) {
-        if (age > 0) {
-            return ResponseEntity.ok(studentService.findAge(age));
-        }
-        return ResponseEntity.ok(Collections.emptyList());
     }
 
     @PostMapping
@@ -70,6 +54,16 @@ class StudentController {
     @GetMapping("findByAge")
     public List<Student> ageSearch(@RequestParam int age){
         return studentService.findAge(age);
+    }
+
+    @GetMapping("/getFaculty")
+    public Faculty getFaculty(@RequestParam Long id){
+        return studentService.getFaculty(id);
+    }
+
+    @GetMapping("/ageBetween")
+    public List<Student> ageBetweenSearch(@RequestParam int min, @RequestParam int max){
+        return studentService.findByAgeBetween(min, max);
     }
 
     @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -107,14 +101,20 @@ class StudentController {
             is.transferTo(os);
         }
     }
-
-    @GetMapping("/getFaculty")
-    public Faculty getFaculty(@RequestParam Long id){
-        return studentService.getFaculty(id);
+    @GetMapping("{id}")
+    public ResponseEntity<Object> getStudentInfo(@PathVariable Long id) {
+        Student student = studentService.findStudent(id);
+        if (student == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(student);
     }
 
-    @GetMapping("/ageBetween")
-    public List<Student> ageBetweenSearch(@RequestParam int min, @RequestParam int max){
-        return studentService.findByAgeBetween(min, max);
+    @GetMapping("getAllStudents")
+    public ResponseEntity<List<Student>> findStudents(@RequestParam(required = false) int age) {
+        if (age > 0) {
+            return ResponseEntity.ok(studentService.findAge(age));
+        }
+        return ResponseEntity.ok(Collections.emptyList());
     }
 }

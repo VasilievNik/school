@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Student {
+public class Student{
     @Id
     @GeneratedValue
     private Long id;
@@ -15,11 +15,11 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    public Faculty getFaculty() {
-        return faculty;
+    public Student(int i, String s, int i1) {
     }
 
-    public Student() {
+    public Faculty getFaculty() {
+        return faculty;
     }
 
     public Long getId(){
