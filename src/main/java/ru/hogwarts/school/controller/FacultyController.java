@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("faculties")
+public
 class FacultyController {
 
     private final FacultyService facultyService;
