@@ -42,7 +42,7 @@ public class StudentTest {
     @InjectMocks
     private StudentController studentController;
 
-    @Test
+      @Test
     public void testStudents() throws Exception {
         final String name = "Ivanov Ivan";
         final int age = 21;
