@@ -10,6 +10,7 @@ import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.StudentService;
 
 import java.io.IOException;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("avatars")
@@ -42,6 +43,11 @@ class AvatarController {
     @DeleteMapping("{id}")
     public void deleteAvatar(@PathVariable Long id){
         avatarService.deleteAvatar(id);
+    }
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<Collection<Avatar>> getAll(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize){
+        return avatarService.getAll(pageNumber, pageSize);
     }
 
 }

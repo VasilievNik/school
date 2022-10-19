@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Student{
+public abstract class Student{
     @Id
     @GeneratedValue
     private Long id;
@@ -16,6 +16,9 @@ public class Student{
     private Faculty faculty;
 
     public Student(int i, String s, int i1) {
+    }
+
+    public Student() {
     }
 
     public Faculty getFaculty() {
