@@ -15,6 +15,10 @@ public abstract class Student{
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "avatar_id")
+    private Avatar avatar;
+
     public Student(int i, String s, int i1) {
     }
 
