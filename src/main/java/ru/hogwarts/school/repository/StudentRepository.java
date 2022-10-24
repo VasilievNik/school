@@ -24,4 +24,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value = "SELECT * FROM Student LIMIT 4 AND OFFSET (COUNT(*)-5)", nativeQuery = true)
     List<Student> getLastFive();
+
+
 }
