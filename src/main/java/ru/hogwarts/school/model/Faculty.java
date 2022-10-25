@@ -19,6 +19,10 @@ public class Faculty {
     public Faculty(long id, String name, String color) {
     }
 
+    public Faculty() {
+
+    }
+
     public Collection<Student> getStudents(){
         return this.students;
     }
