@@ -1,0 +1,3 @@
+databaseChangeLog:
+  include:
+    file: school/scr/main/resourses/liquibase/scripts/lesson-three.sql

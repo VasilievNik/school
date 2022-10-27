@@ -25,4 +25,4 @@ FROM faculty
 
 SELECT student.name, student.age, student.avatar_id, student.faculty_name, faculty.name
 FROM faculty
-    INNER JOIN faculty ON student.faculty_name = faculty.name
+    INNER JOIN faculty ON student.faculty_name = faculty.name 
