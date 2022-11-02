@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.Exceptions.FacultyNotExistException;
@@ -15,16 +17,19 @@ public class FacultyService{
 
 
     private final FacultyRepository facultyRepository;
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
     @Autowired
     public FacultyService(FacultyRepository facultyrepository) {
         this.facultyRepository = facultyrepository;
     }
 
     public Faculty createFaculty(Faculty faculty) {
+        logger.info("createFaculty method used in StudentService");
             return facultyRepository.save(faculty);
     }
 
     public Faculty updateFaculty(Faculty facultyNew) {
+        logger.info("updateFaculty method used in StudentService");
         if (facultyRepository.existsById(facultyNew.getId())){
             Faculty facultyOld = facultyRepository.findById(facultyNew.getId()).get();
             facultyOld = facultyNew;
@@ -35,6 +40,7 @@ public class FacultyService{
     }
 
     public Faculty findFaculty(Long id) {
+        logger.info("findFaculty method used in StudentService");
         if (facultyRepository.existsById(id)){
             return facultyRepository.findById(id).get();
         }
@@ -42,6 +48,7 @@ public class FacultyService{
     }
 
     public void deleteFaculty(Long id) {
+        logger.info("deleteFaculty method used in StudentService");
         if (facultyRepository.existsById(id)){
             facultyRepository.deleteById(id);
         }
@@ -49,14 +56,17 @@ public class FacultyService{
     }
 
     public List<Faculty> findColor(String color){
+        logger.info("findColor method used in StudentService");
         return facultyRepository.findAllByColor(color);
     }
 
     public Collection<Student> getStudents(Long id){
+        logger.info("getStudents method used in StudentService");
         return facultyRepository.findById(id).get().getStudents();
     }
 
     public Faculty findByNameIgnoreCase(String nameOrColor){
+        logger.info("findByNameIgnoreCase method used in StudentService");
         return facultyRepository.findByNameIgnoreCase(nameOrColor);
     }
 }

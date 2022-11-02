@@ -27,7 +27,7 @@ public class AvatarService {
     }
 
     public ResponseEntity<Collection<Avatar>> getAll(Integer pageNumber, Integer pageSize) {
-        logger.info("Method to get all of avatars was invoked");
+        logger.info("getAll method used in StudentService");
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         Collection<Avatar> avatarsList = avatarRepository.findAll(pageRequest).getContent();
         if (avatarsList.isEmpty()) {
@@ -38,6 +38,7 @@ public class AvatarService {
     }
 
      public Avatar updateAvatar(Avatar avatarNew) {
+         logger.info("updateAvatar method used in StudentService");
          Avatar avataryOld = avatarRepository.findById(avatarNew.getId()).get();
          avataryOld = avatarNew;
          avatarRepository.save(avataryOld);
@@ -45,10 +46,12 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(Long id) {
+        logger.info("findAvatar method used in StudentService");
         return avatarRepository.findById(id).get();
     }
 
     public void deleteAvatar(Long id) {
+        logger.info("deleteAvatar method used in StudentService");
         avatarRepository.deleteById(id);
     }
 }
