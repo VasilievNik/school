@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,12 +24,13 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 public class StudentService{
 
-    //@Value("${avatars.dir.path}")       //ПОЧЕМУ ТЫ НЕ РАБОТАЕШЬ?!?!?!?!
     @Value("{avatars.dir.path}")
     private String avatarsDir;
 
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     @Autowired
     public StudentService(StudentRepository studentrepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentrepository;
@@ -35,10 +38,12 @@ public class StudentService{
     }
 
     public Student createStudent(Student student) {
-            return studentRepository.save(student);
+        logger.info("createStudent method used in StudentService");
+        return studentRepository.save(student);
     }
 
     public Student updateStudent(Student studentNew) {
+        logger.info("updateStudent method used in StudentService");
         if (studentRepository.existsById(studentNew.getId())){
             Student studentOld = studentRepository.findById(studentNew.getId()).get();
             studentOld = studentNew;
@@ -49,6 +54,7 @@ public class StudentService{
     }
 
     public Student findStudent(Long id) {
+        logger.info("findStudent method used in StudentService");
         if (studentRepository.existsById(id)){
             return studentRepository.findById(id).get();
         }
@@ -56,6 +62,7 @@ public class StudentService{
     }
 
     public void deleteStudent(Long id) {
+        logger.info("deleteStudent method used in StudentService");
         if (studentRepository.existsById(id)){
             studentRepository.deleteById(id);
         }
@@ -63,14 +70,17 @@ public class StudentService{
     }
 
     public List<Student> findAge(int age){
+        logger.info("findAge method used in StudentService");
         return studentRepository.findAllByAge(age);
     }
 
     public Avatar findAvatar(long studentId) {
+        logger.info("findAvatar method used in StudentService");
         return avatarRepository.findByStudentId(studentId);
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("uploadAvatar method used in StudentService");
         Student student = studentRepository.getById(studentId);
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -92,26 +102,32 @@ public class StudentService{
         avatarRepository.save(avatar);
     }
     private String getExtensions(String fileName) {
+        logger.info("getExtensions method used in StudentService");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public Faculty getFaculty(Long id){
+        logger.info("getFaculty method used in StudentService");
         return studentRepository.findById(id).get().getFaculty();
     }
 
     public List<Student> findByAgeBetween(int min, int max){
+        logger.info("findByAgeBetween method used in StudentService");
         return studentRepository.findByAgeBetween(min, max);
     }
 
     public Integer getAvgAge(){
+        logger.info("getAvgAge method used in StudentService");
         return studentRepository.getAvgAge();
     }
 
     Integer getAmount(){
+        logger.info("getAmount method used in StudentService");
         return studentRepository.getAmount();
     }
 
     List<Student> getLastFive(){
+        logger.info("getLastFive method used in StudentService");
         return studentRepository.getLastFive();
     }
 }
