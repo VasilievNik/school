@@ -18,7 +18,7 @@ public class AvatarService {
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
     private String avatarsDir;
-    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     @Autowired
     public AvatarService(AvatarRepository avatarRepository, StudentRepository studentRepository) {

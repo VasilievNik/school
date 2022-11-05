@@ -29,7 +29,7 @@ public class StudentService{
 
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     @Autowired
     public StudentService(StudentRepository studentrepository, AvatarRepository avatarRepository) {
