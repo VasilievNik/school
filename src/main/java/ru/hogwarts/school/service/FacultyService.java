@@ -17,7 +17,7 @@ public class FacultyService{
 
 
     private final FacultyRepository facultyRepository;
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
     @Autowired
     public FacultyService(FacultyRepository facultyrepository) {
         this.facultyRepository = facultyrepository;

@@ -9,14 +9,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/getPort")
 public class InfoController {
 
-    @Autowired
-    Environment environment;
-
     @Value("${server.port}")
-    String port;
+    private String port;
 
     @GetMapping
     public String getPort(){
-        return environment.getProperty("server.port");
+        return port;
     }
 }
