@@ -6,6 +6,7 @@ import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.List;
+import java.util.OptionalInt;
 
 @RestController
 @RequestMapping("faculties")
@@ -53,5 +54,14 @@ class FacultyController {
         return facultyService.findByNameIgnoreCase(nameOrColor);
     }
 
+    @GetMapping("/getLongestFaculty")
+    public OptionalInt getLongestFaculty(){
+        return FacultyService.getLongestFaculty();
+    }
+
+    @GetMapping("/parallelTest")
+    public int parallelTest(){
+        return FacultyService.parallelTest();
+    }
 
 }

@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @RestController
 @RequestMapping("students")
@@ -116,5 +117,15 @@ class StudentController {
             return ResponseEntity.ok(studentService.findAge(age));
         }
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("getStartWithA")
+    public List<String> getStartWithA() {
+        return StudentService.getStartWithA();
+    }
+
+    @GetMapping("getStartWithA")
+    public OptionalDouble getAverageAge() {
+        return StudentService.getAverageAge();
     }
 }
