@@ -11,13 +11,15 @@ import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalInt;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyService{
 
 
-    private final FacultyRepository facultyRepository;
-    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private static FacultyRepository facultyRepository;
+    private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
     @Autowired
     public FacultyService(FacultyRepository facultyrepository) {
         this.facultyRepository = facultyrepository;
@@ -69,4 +71,22 @@ public class FacultyService{
         logger.info("findByNameIgnoreCase method used in StudentService");
         return facultyRepository.findByNameIgnoreCase(nameOrColor);
     }
+
+    public static OptionalInt getLongestFaculty(){
+        logger.info("getLongestFaculty method used in StudentService");
+        return facultyRepository.findAll().stream()
+                .map(faculty -> faculty.getName().length())
+                .mapToInt(v -> v)
+                .max();
+    }
+
+    public static int parallelTest(){
+        logger.info("parallelTest method used in StudentService");
+        int sum = Stream.iterate(1, a -> a +1).parallel()
+                .limit(1_000_000)
+                .reduce(0, (a, b) -> a + b );
+        return sum;
+    }
+
+
 }

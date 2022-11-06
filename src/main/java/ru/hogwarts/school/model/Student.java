@@ -62,5 +62,11 @@ public class Student{
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    public boolean startsWith(String a) {
+        if (name.charAt(0)=='A')
+            return true;
+        return false;
+    }
 }
 

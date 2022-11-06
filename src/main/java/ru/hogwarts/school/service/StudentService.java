@@ -16,8 +16,11 @@ import ru.hogwarts.school.repository.StudentRepository;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.List;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -27,9 +30,9 @@ public class StudentService{
     @Value("{avatars.dir.path}")
     private String avatarsDir;
 
-    private final StudentRepository studentRepository;
+    private static StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
-    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     @Autowired
     public StudentService(StudentRepository studentrepository, AvatarRepository avatarRepository) {
@@ -130,4 +133,24 @@ public class StudentService{
         logger.info("getLastFive method used in StudentService");
         return studentRepository.getLastFive();
     }
+
+    public static List<String> getStartWithA(){
+        logger.info("getStartWithA method used in StudentService");
+        return studentRepository.findAll().stream()
+                .map(student -> student.getName())
+                .filter(s -> s.startsWith("a"))
+                .map(s -> s.toUpperCase())
+                .collect(Collectors.toList());
+    }
+
+    public static OptionalDouble getAverageAge(){
+        logger.info("getAverageAge method used in StudentService");
+        Stream<Integer> stream = studentRepository.findAll().stream()
+                .map(student -> student.getAge());
+        IntStream intStream = (IntStream) stream;
+        OptionalDouble fin = intStream.average();
+        return fin;
+    }
+
+
 }
