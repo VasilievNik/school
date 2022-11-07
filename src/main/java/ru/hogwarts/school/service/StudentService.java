@@ -152,5 +152,41 @@ public class StudentService{
         return fin;
     }
 
+    public static void threadTest(){
+        logger.info("threadTest method used in StudentService");
+        StudentService.studentsToConsole(0L);
+        StudentService.studentsToConsole(1L);
+        new Thread(() -> {
+            StudentService.studentsToConsole(2L);
+            StudentService.studentsToConsole(3L);
+        }).start();
+        new Thread(() -> {
+            StudentService.studentsToConsole(4L);
+            StudentService.studentsToConsole(5L);
+        }).start();
+    }
+
+    public static void studentsToConsole(Long id) {
+        System.out.println(studentRepository.findById(id).get().getName());
+    }
+
+    public static void threadTestSync(){
+        logger.info("threadTest method used in StudentService");
+        StudentService.studentsToConsoleSync(0L);
+        StudentService.studentsToConsoleSync(1L);
+        new Thread(() -> {
+            StudentService.studentsToConsoleSync(2L);
+            StudentService.studentsToConsoleSync(3L);
+        }).start();
+        new Thread(() -> {
+            StudentService.studentsToConsoleSync(4L);
+            StudentService.studentsToConsoleSync(5L);
+        }).start();
+    }
+    public static void studentsToConsoleSync(Long id) {
+        synchronized(id){
+            System.out.println(studentRepository.findById(id).get().getName());
+        }
+    }
 
 }

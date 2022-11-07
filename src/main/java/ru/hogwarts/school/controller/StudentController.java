@@ -128,4 +128,14 @@ class StudentController {
     public OptionalDouble getAverageAge() {
         return StudentService.getAverageAge();
     }
+
+    @GetMapping("threadTest")
+    public void threadTest() {
+        StudentService.threadTest();
+    }
+    
+    @GetMapping("threadTest")
+    public void threadTestSync() {
+        StudentService.threadTest();
+    }
 }
